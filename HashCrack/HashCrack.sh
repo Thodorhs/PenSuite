@@ -1,13 +1,14 @@
 #!/bin/bash
-read -p "Hash: " h
-sudo hashid -m -j -e $h
-read -p "choose type from above: " t
-read -p "type: '1' for JTR or '2' for HashCat: " type
+rm -rf out.txt
+sudo hashid -m -j -e hashes.txt
+read -p "~Type: '1' for JTR or '2' for HashCat: " type
+read -p "~Choose type from above: " t
+read -p "~Provide full path of wordlist you want to use: " wl
 if [[ $type -eq 1 ]]
 	then 
-	read -p "Provide file with hashes for JTR to work: " f
-	sudo john --format=$t $f
+	sudo john --format=$t $wl
 elif [[ $type -eq 2 ]]
 	then
-	sudo hashcat -m $t $h
+	touch out.txt
+	sudo hashcat -w 3 -m $t -a 0 -o out.txt hashes.txt $wl
 fi

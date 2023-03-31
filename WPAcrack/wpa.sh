@@ -20,7 +20,7 @@ ENUM=(
 state=OK
 
 sudo rm -rf wpacap-01*
-read -p "Please enter your wireless adapter interface name (use iwconfig):" wlan
+read -p "~Please enter your wireless adapter interface name (use iwconfig):" wlan
 
 if [[ $state -eq $OK ]] 
 then 
@@ -34,8 +34,8 @@ fi
 
 if [[ $state -eq $OK ]] 
 then
-	read -p "Please choose a WPA encrypted network bssid/mac from above:" NetMac
-	read -p "please specify channel of network:" c
+	read -p "~Please choose a WPA encrypted network bssid/mac from above:" NetMac
+	read -p "~Please specify channel of network:" c
 	sudo iwconfig $wlan channel $c && state=0 || state=3
 fi
 
@@ -48,14 +48,15 @@ fi
 
 if [[ $state -eq $OK ]] 
 then
-	sudo aircrack-ng wpacap-01.cap -w rockyou.txt && state=0 || state=4
+	read -p "~Please provide the full path of a wordlist:" list
+	sudo aircrack-ng wpacap-01.cap -w $list && state=0 || state=4
 fi
 
 sudo rm -rf wpacap-01*
 
 if [[ $state -eq $OK ]] 
 then
-	echo "script finished with no errors"
+	echo "~Script finished with no errors"
 else
-	echo "script finished with error code: " $state 
+	echo "~Script finished with error code: " $state 
 fi
