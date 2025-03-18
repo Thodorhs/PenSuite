@@ -11,4 +11,5 @@ sudo apt install hashid
 sudo apt install hashcat
 sudo apt install john
 sudo apt-get -y install cupp
+sudo apt install rarcrack
 fi
